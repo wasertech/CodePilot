@@ -1,2 +1,57 @@
-echo "..."
-exit 1
+echo "Installing CodePilot"
+
+# check if git is installed
+if [[ -z $(which git) ]]; then
+    echo "Git is not installed"
+    distro=$(lsb_release -i | cut -f 2-)
+    echo "Please install Git on $distro"
+    exit 1
+fi
+
+# check if gh is installed
+if [[ -z $(which gh) ]]; then
+    echo "GitHub CLI is not installed"
+    distro=$(lsb_release -i | cut -f 2-)
+    echo "Please install GitHub CLI on $distro"
+    exit 1
+fi
+
+curl -s https://raw.githubusercontent.com/wasertech/CodePilot/main/scripts/codepilot > codepilot
+chmod +x codepilot
+# copy the codepilot script to /usr/local/bin
+echo "Copying codepilot script to /usr/local/bin"
+sudo cp codepilot /usr/local/bin/codepilot
+# source the codepilot script in ~/.bashrc
+# only if it is not already sourced
+
+echo "Handling bash"
+if [[ -f ~/.bashrc ]]; then
+    if [[ $(grep -c "source /usr/local/bin/codepilot" ~/.bashrc) -eq 0 ]]; then
+        echo "Sourcing codepilot script in ~/.bashrc"
+        echo "source /usr/local/bin/codepilot" >> ~/.bashrc
+    else
+        echo "CodePilot is already installed"
+        exit 0
+    fi
+else
+    echo "Sourcing codepilot script in ~/.bashrc"
+    echo "source /usr/local/bin/codepilot" >> ~/.bashrc
+fi
+
+echo "Handling zsh"
+if [[ -f ~/.zshrc ]]; then
+    if [[ $(grep -c "source /usr/local/bin/codepilot" ~/.zshrc) -eq 0 ]]; then
+        echo "Sourcing codepilot script in ~/.zshrc"
+        echo "source /usr/local/bin/codepilot" >> ~/.zshrc
+    else
+        echo "CodePilot is already installed"
+        exit 0
+    fi
+else
+    echo "Sourcing codepilot script in ~/.zshrc"
+    echo "source /usr/local/bin/codepilot" >> ~/.zshrc
+fi
+
+echo "GitHub Copilot installed successfully"
+
+exit 0
