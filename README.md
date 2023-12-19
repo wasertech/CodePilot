@@ -353,7 +353,7 @@ Then hit enter and follow the instructions.
 >  - Use command substitution (`$(...)` or `...`) to capture the output of a command and use it as part of another command.                             
 >  - Use variables to store and manipulate data.                                                                                                      
 >  - Use loops (for, while) to iterate over lists or execute commands repeatedly.                                                                     
->  - Use conditiona`ls` (if, case) to control the flow of execution based on conditions.                                                                
+>  - Use conditionals (if, case) to control the flow of execution based on conditions.                                                                
 >  - Use control operators (&&, ||, ;) to combine multiple commands and control their execution.                                                      
 >  - Use file and directory manipulation commands (`ls`, cp, mv, rm, mkdir, `cd`) to work with files and directories.                                     
 >  - Use text processing commands (grep, sed, awk) to search for patterns and manipulate text.                                                        
