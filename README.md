@@ -3,11 +3,11 @@ Your AI command line copilot.
 
 > I'm powered by AI, so surprises and mistakes are possible. Make sure to verify any generated code or suggestions, and share feedback so that we can learn and improve.
 
-You need an active subscription to GitHub Copilot to use this tool.
+You need an active subscription to [GitHub Copilot](https://github.com/settings/copilot) to use this tool.
 
 ## Introduction
 
-CodePilot is a collection of shell scripts that wrap the GitHub Copilot CLI into a more user-friendly interface through the use of various aliases and functions.
+CodePilot is a collection of shell scripts that wrap the [GitHub Copilot CLI](https://github.com/github/gh-copilot) into a more user-friendly interface through the use of various aliases and functions.
 
 Such as:
 
