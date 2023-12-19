@@ -305,6 +305,15 @@ Some useful commands:
   suggest -t [git|gh|shell] '<goal>'
   ```
 
+## Pre-requisites
+
+The following are required to use CodePilot:
+
+- A Shell: [Bash](https://www.gnu.org/software/bash/) or [Zsh](https://www.zsh.org/)
+- [Git](https://git-scm.com/)
+- [GitHub CLI](https://cli.github.com/)
+
+They must be installed and configured before you can use CodePilot. An active [GitHub Copilot](https://copilot.github.com/) subscription is also required.
 
 ## Installation
 
