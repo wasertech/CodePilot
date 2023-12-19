@@ -15,7 +15,7 @@ Such as:
 
 ### Explain
 
-You can ask GitHub Copilot to explain something.
+You can ask GitHub Copilot to explain something, like navigating the shell.
 
 ```shell
 ❯ explain "how to navigate dirs"
