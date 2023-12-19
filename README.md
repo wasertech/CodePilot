@@ -359,6 +359,12 @@ Some useful commands:
   use_docker_to '<goal>'
   ```
 
+- Use Python to ...
+  
+  ```shell
+  use_py_to '<goal>'
+  ```
+
 - Explain ...
   
   ```shell
@@ -532,6 +538,22 @@ Get help with the shell.
 
 ```shell
 ❯ use_sh_to 'Kill processes holding onto deleted files'
+```
+
+#### Use Docker
+
+Get help with Docker.
+
+```shell
+❯ use_docker_to 'list images'
+```
+
+#### Use Python
+
+Get help with Python.
+
+```shell
+❯ use_py_to 'list files in a directory'
 ```
 
 #### How do I ... ?
