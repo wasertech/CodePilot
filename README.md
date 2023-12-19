@@ -103,7 +103,7 @@ _? Select an option_
 
 ---
 
-Based on `use_sh_to`, you can also ask for help with Docker.
+Based on `use_sh_to`, you can also also ask for help with Docker.
 
 ### Use Docker to ...
 
