@@ -66,9 +66,11 @@ else
     echo ". $local_bin_path/codepilot.zsh" >> ~/.zshrc
 fi
 
+echo "Removing useless files"
 if [[ ! -f README.md && ! -f Makefile ]]; then
-    echo "Removing useless files"
     rm -f codepilot.sh codepilot.zsh install
+else
+    rm -f codepilot.sh codepilot.zsh
 fi
 
 echo "GitHub Copilot installed successfully"

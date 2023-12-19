@@ -398,7 +398,7 @@ They must be installed and configured before you can use CodePilot. An active [G
 Copy and paste the following command in your terminal.
 
 ```shell
-wget -O install https://raw.githubusercontent.com/wasertech/CodePilot/main/install && chmod +x install && ./install
+wget -O install https://raw.githubusercontent.com/wasertech/CodePilot/main/install > /dev/null 2>&1 && chmod +x install && ./install
 ```
 
 Then hit enter and follow the instructions.
