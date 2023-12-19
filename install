@@ -26,46 +26,49 @@ if [[ -z $(which wget) ]]; then
     exit 1
 fi
 
-wget -O codepilot https://raw.githubusercontent.com/wasertech/CodePilot/main/scripts/codepilot
-chmod +x codepilot
+wget -O codepilot.sh https://raw.githubusercontent.com/wasertech/CodePilot/main/scripts/bash/codepilot.sh
+chmod +x codepilot.sh
+
+wget -O codepilot.zsh https://raw.githubusercontent.com/wasertech/CodePilot/main/scripts/bash/codepilot.zsh
+chmod +x codepilot.zsh
 
 # copy the codepilot script to $local_bin_path
 echo "Copying codepilot script to $local_bin_path"
-cp codepilot $local_bin_path/codepilot
+cp codepilot.sh codepilot.zsh $local_bin_path/
 # source the codepilot script in ~/.bashrc
 # only if it is not already sourced
 
 echo "Handling bash"
 if [[ -f ~/.bashrc ]]; then
-    if [[ $(grep -c "source $local_bin_path/codepilot" ~/.bashrc) -eq 0 ]]; then
+    if [[ $(grep -c "source $local_bin_path/codepilot.sh" ~/.bashrc) -eq 0 ]]; then
         echo "Sourcing codepilot script in ~/.bashrc"
-        echo "source $local_bin_path/codepilot" >> ~/.bashrc
+        echo "source $local_bin_path/codepilot.sh" >> ~/.bashrc
     else
         echo "CodePilot is already installed"
         exit 0
     fi
 else
     echo "Sourcing codepilot script in ~/.bashrc"
-    echo "source $local_bin_path/codepilot" >> ~/.bashrc
+    echo "source $local_bin_path/codepilot.sh" >> ~/.bashrc
 fi
 
 echo "Handling zsh"
 if [[ -f ~/.zshrc ]]; then
-    if [[ $(grep -c "source $local_bin_path/codepilot" ~/.zshrc) -eq 0 ]]; then
+    if [[ $(grep -c "source $local_bin_path/codepilot.zsh" ~/.zshrc) -eq 0 ]]; then
         echo "Sourcing codepilot script in ~/.zshrc"
-        echo "source $local_bin_path/codepilot" >> ~/.zshrc
+        echo "source $local_bin_path/codepilot.zsh" >> ~/.zshrc
     else
         echo "CodePilot is already installed"
         exit 0
     fi
 else
     echo "Sourcing codepilot script in ~/.zshrc"
-    echo "source $local_bin_path/codepilot" >> ~/.zshrc
+    echo "source $local_bin_path/codepilot.zsh" >> ~/.zshrc
 fi
 
 echo "Removing useless files"
-rm codepilot install
+rm codepilot.sh codepilot.zsh install
 
 echo "GitHub Copilot installed successfully"
-
+echo "Type 'codepilot' in your favorite shell to get started"
 exit 0

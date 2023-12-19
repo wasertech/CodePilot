@@ -2,12 +2,14 @@
 
 # This script is used to run the CodePilot application.
 
+bash --version
+
 codepilot="gh copilot"
 
 alias codepilot="$codepilot"
 alias copilot="$codepilot"
 alias suggest="${codepilot} suggest"
-alias explain="${codepilot} explain"
+alias _explain="${codepilot} explain"
 
 function git_ssh_login() {
     howdoi "login with ssh with git"
@@ -92,8 +94,8 @@ function gh_copilot_login() {
 function check_copilot() {
     if [[ -z $(which git) ]]; then
         echo "Git is not installed"
-        distro=$(lsb_release -i | cut -f 2-)
-        explain "how to install Git on $distro"
+        # distro=$(lsb_release -i | cut -f 2-)
+        # explain "how to install Git on $distro"
         echo "Git is required to run CodePilot"
         echo "Install Git and re-run codepilot"
         return 1
@@ -101,8 +103,8 @@ function check_copilot() {
 
     if [[ -z $(which gh) ]]; then
         echo "GitHub CLI is not installed"
-        distro=$(lsb_release -i | cut -f 2-)
-        explain "how to install GitHub CLI on $distro"
+        # distro=$(lsb_release -i | cut -f 2-)
+        # explain "how to install GitHub CLI on $distro"
         echo "GitHub CLI is required to run CodePilot"
         echo "Install GitHub CLI and re-run codepilot"
         return 1
@@ -114,7 +116,7 @@ function check_copilot() {
         echo "GitHub Copilot CLI is not installed"
         echo "Installing GitHub Copilot CLI"
         echo "Please wait..."
-        gh_copilot_install
+        gh_copilot_install && \
         echo "GitHub Copilot CLI installed successfully"
         echo "Logging in to GitHub Copilot CLI"
         gh_copilot_login
@@ -124,27 +126,73 @@ function check_copilot() {
     return 0
 }
 
+function clean_output(){
+    if [[ $# -eq 0 ]]; then
+        echo "Usage: clean_output <output>"
+        return 1
+    else
+        cmd_out=$@
+        split_word="# Explanation:"
+    fi
+    # cmd_out=$(explain "what is hello world in bash")
+    _out=$(python -c "cmd_out='''$cmd_out'''; split=cmd_out.split('${split_word}'); _out = '\n'.join([ l for l in split[1].split('\n')[1:]]) if len(split) >= 2 else cmd_out; print(_out)")
+    echo "$_out"
+    return 0
+}
+
+function explain() {
+    if [[ $# -eq 0 ]]; then
+        echo "Usage: explain <query>"
+        return 1
+    else
+        cmd_in=$@
+    fi
+    cmd_out=$(_explain "$cmd_in")
+    clean_output "$cmd_out"
+    return 0
+}
+
 function copilot_help() {
     if [[ $# -eq 0 ]]; then
         explain 'how to get help in the shell'
+        echo
         echo "Some useful commands:"
-        echo ""
-        echo "Get help for a command:"
-        echo "  help nano"
+        echo
+        echo "Get help for a particular command"
+        echo "  help <command>"
+        echo
         echo "How do I ... ?"
-        echo "  howdoi 'print hello world'"
-        echo "Too long; didn't read (the manual page). Give me the gist of how to use this command:"
-        echo "  tldr 'git commit'"
+        echo "  howdoi '<goal>'"
+        echo
+        echo "Too long; didn't read (the manual). Give me the gist of how to use this command:"
+        echo "  tldr '<command>'"
+        echo
         echo "Use git to ..."
-        echo "  use_git_to 'Undo the most recent local commits'"
+        echo "  use_git_to '<goal>'"
+        echo
         echo "Use GitHub CLI to ..."
-        echo "  use_gh_to 'Create pull request'"
+        echo "  use_gh_to '<goal>'"
+        echo
         echo "Use the shell to ..."
-        echo "  use_sh_to 'Kill processes holding onto deleted files'"
+        echo "  use_sh_to '<goal>'"
+        echo
         echo "Explain ..."
-        echo "  explain 'what is a dbus session bus'"
+        echo "  explain '<goal>'"
+        echo
         echo "Suggest Command Interactively"
         echo "  suggest"
+        echo
+        echo "Suggest [Git, GitHub, Shell] Command to ..."
+        echo "  suggest -t [git|gh|shell] '<goal>'"
+    elif [ $@ = '--help' ]; then
+        echo "(Meta)Help"
+        echo "Get help about a command."
+        echo
+        echo "Usage: help <command>"
+        echo "Example: help nano"
+        echo "Example: help --help"
+        echo "Example: help"
+        return 0
     else
         case $1 in
             suggest)
@@ -160,8 +208,8 @@ function copilot_help() {
                 echo "To get help for the codepilot, run 'codepilot --help'."
                 ;;
             *)
-                man $@ || $@ --help 
-                explain "how to use the following command: $@"
+                explain "how to get more information about '$@' behavior as a program in the command line"
+                explain "how to use the following command: '$@'"
                 ;;
         esac
     fi
@@ -169,7 +217,7 @@ function copilot_help() {
 }
 
 function howdoi() {
-    if [[ $# -eq 0 ]]; then
+    if [[ $# -eq 0 ]] || [ $@ = '--help' ]; then
         echo "Usage: howdoi <question>"
         return 1
     else
@@ -179,7 +227,7 @@ function howdoi() {
 }
 
 function tldr() {
-    if [[ $# -eq 0 ]]; then
+    if [[ $# -eq 0 ]] || [ $@ = '--help' ]; then
         echo "Usage: tldr <command>"
         return 1
     else
@@ -189,7 +237,7 @@ function tldr() {
 }
 
 use_git_to() {
-    if [[ $# -eq 0 ]]; then
+    if [[ $# -eq 0 ]] || [ $@ = '--help' ]; then
         echo "Usage: use_git_to <goal>"
         echo "Example: use_git_to 'Undo the most recent local commits'"
         echo "Example: use_git_to 'Clean up local branches'"
@@ -202,7 +250,7 @@ use_git_to() {
 }
 
 use_gh_to() {
-    if [[ $# -eq 0 ]]; then
+    if [[ $# -eq 0 ]] || [ $@ = '--help' ]; then
         echo "Usage: use_gh_to <goal>"
         echo "Example: use_gh_to 'Create pull request'"
         echo "Example: use_gh_to 'List pull requests waiting for my review'"
@@ -235,10 +283,12 @@ function welcome() {
 
 alias help='copilot_help'
 
-check_copilot
-
-echo "Welcome in the Shell! I am GitHub Copilot."
-echo "To get started, type 'welcome' to learn how to operate the shell."
-echo "To get some help you can type 'help'."
-echo "Type 'exit' to exit the shell."
+check_copilot && \
+echo
+echo "Your copilot is ready to help you! Type 'help' to get started." \
+|| echo "Your copilot is not ready to help you. Please check the error messages above."
+# echo "Welcome in the Shell! I am GitHub Copilot."
+# echo "To get started, type 'welcome' to learn how to operate the shell."
+# echo "To get some help you can type 'help'."
+# echo "Type 'exit' to exit the shell."
 echo
