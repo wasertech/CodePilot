@@ -182,6 +182,9 @@ function copilot_help() {
         echo "Use Docker to ..."
         echo "  use_docker_to '<goal>'"
         echo
+        echo "Use Python to ..."
+        echo "  use_py_to '<goal>'"
+        echo
         echo "Explain ..."
         echo "  explain '<goal>'"
         echo
@@ -233,6 +236,9 @@ function copilot_help() {
                 ;;
             use_docker_to)
                 echo "To get help for the use_docker_to command, run 'use_docker_to --help'."
+                ;;
+            use_py_to)
+                echo "To get help for the use_py_to command, run 'use_py_to --help'."
                 ;;
             *)
                 explain "how to get more information about '$@' behavior as a program in the command line"
@@ -324,6 +330,22 @@ function use_docker_to() {
         return 1
     else
         suggest -t shell "$@ using Docker"
+    fi
+    return 0
+}
+
+function use_py_to(){
+    if [[ $# -eq 0 ]]; then
+        echo "Use Python to ..."
+        echo
+        echo "Usage: use_py_to <goal>"
+        echo "Example: use_py_to 'Convert a string to lowercase'"
+        echo "Example: use_py_to 'Strip string of whitespace and linebreaks'"
+        echo "Example: use_py_to 'Display simple progress bar'"
+        echo "Example: use_py_to 'Display a window with a button to exit'"
+        return 1
+    else
+        suggest -t shell "$@ in python"
     fi
     return 0
 }
