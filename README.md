@@ -614,3 +614,18 @@ Flags:
 
 Use "copilot `[command]` --help" for more information about a command.
 ```
+
+## Contributing
+
+Built with [GitHub Copilot](https://copilot.github.com/).
+
+If like this project, please consider:
+1. Starring the [Project](https://github.com/wasertech/CodePilot)
+2. Sharing it with your friends and colleagues
+3. Becoming a [sponsor](https://github.com/sponsors/wasertech) ❤️
+4. Helping GitHub foot the bill for [Copilot](https://github.com/features/copilot) by subscribing to it
+5. Submmiting new ways to wrap the GitHub Copilot CLI into a more user-friendly interface through the use of various aliases and functions
+
+## License
+
+[GNU General Public License Version 3](LICENSE)

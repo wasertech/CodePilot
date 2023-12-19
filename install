@@ -32,6 +32,8 @@ chmod +x codepilot.sh
 wget -O codepilot.zsh https://raw.githubusercontent.com/wasertech/CodePilot/main/scripts/bash/codepilot.zsh
 chmod +x codepilot.zsh
 
+mkdir -p $local_bin_path
+
 # copy the codepilot script to $local_bin_path
 echo "Copying codepilot script to $local_bin_path"
 cp -f codepilot.sh codepilot.zsh $local_bin_path/
