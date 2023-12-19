@@ -218,7 +218,7 @@ function copilot_help() {
 
 function howdoi() {
     if [[ $# -eq 0 ]] || [ $@ = '--help' ]; then
-        echo "Usage: howdoi <question>"
+        echo "Usage: howdoi <goal>"
         return 1
     else
         explain "How do I $@ ?"
@@ -236,7 +236,18 @@ function tldr() {
     return 0
 }
 
-use_git_to() {
+function whatis() {
+    if [[ $# -eq 0 ]] || [ $@ = '--help' ]; then
+        echo "Usage: whatis <command|concept>"
+        return 1
+    else
+        explain "what is $@ ?"
+    fi
+    return 0
+
+}
+
+function use_git_to() {
     if [[ $# -eq 0 ]] || [ $@ = '--help' ]; then
         echo "Usage: use_git_to <goal>"
         echo "Example: use_git_to 'Undo the most recent local commits'"
@@ -249,7 +260,7 @@ use_git_to() {
     return 0
 }
 
-use_gh_to() {
+function use_gh_to() {
     if [[ $# -eq 0 ]] || [ $@ = '--help' ]; then
         echo "Usage: use_gh_to <goal>"
         echo "Example: use_gh_to 'Create pull request'"
@@ -262,7 +273,7 @@ use_gh_to() {
     return 0
 }
 
-use_sh_to() {
+function use_sh_to() {
     if [[ $# -eq 0 ]]; then
         echo "Usage: use_sh_to <goal>"
         echo "Example: use_sh_to 'Kill processes holding onto deleted files' "
@@ -276,8 +287,29 @@ use_sh_to() {
     return 0
 }
 
+function use_docker_to() {
+    if [[ $# -eq 0 ]]; then
+        echo "Usage: use_docker_to <goal>"
+        echo "Example: use_docker_to 'List all running containers'"
+        echo "Example: use_docker_to 'List all images'"
+        echo "Example: use_docker_to 'List all volumes'"
+        echo "Example: use_docker_to 'List all networks'"
+        return 1
+    else
+        suggest -t shell "$@ using Docker"
+    fi
+    return 0
+}
+
 function welcome() {
-    explain 'how to operate the shell' && \
+    echo "Welcome in the Shell! I am GitHub Copilot."
+    echo
+    echo "Here how to operate the shell:" && \
+    explain 'how to operate the shell' || echo "Unfortunately, I wasn't able to create a guide for you to operate the shell."
+    echo
+    echo "To get some help you can type 'help'."
+    echo "Type 'exit' to exit the shell."
+    echo
     return 0
 }
 
@@ -285,10 +317,6 @@ alias help='copilot_help'
 
 check_copilot && \
 echo
-echo "Your copilot is ready to help you! Type 'help' to get started." \
+echo "Your copilot is ready to help you! Type 'welcome' or 'help' to get started." \
 || echo "Your copilot is not ready to help you. Please check the error messages above."
-# echo "Welcome in the Shell! I am GitHub Copilot."
-# echo "To get started, type 'welcome' to learn how to operate the shell."
-# echo "To get some help you can type 'help'."
-# echo "Type 'exit' to exit the shell."
 echo
