@@ -55,7 +55,7 @@ fi
 
 echo "Handling zsh"
 if [[ -f ~/.zshrc ]]; then
-    if [[ $(grep -c "source $local_bin_path/codepilot.zsh" ~/.zshrc) -eq 0 ]]; then
+    if [[ $(grep -c ". $local_bin_path/codepilot.zsh" ~/.zshrc) -eq 0 ]]; then
         echo "Sourcing codepilot script in ~/.zshrc"
         echo "source $local_bin_path/codepilot.zsh" >> ~/.zshrc
     else
@@ -63,7 +63,7 @@ if [[ -f ~/.zshrc ]]; then
     fi
 else
     echo "Sourcing codepilot script in ~/.zshrc"
-    echo "source $local_bin_path/codepilot.zsh" >> ~/.zshrc
+    echo ". $local_bin_path/codepilot.zsh" >> ~/.zshrc
 fi
 
 echo "Removing useless files"
