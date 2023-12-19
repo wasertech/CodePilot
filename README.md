@@ -280,7 +280,7 @@ I'm powered by AI, so surprises and mistakes are possible. Make sure to verify a
 
 Explanation:                                                                                                                                         
                                                                                                                                                      
-  • cd is a command used to change the current working directory
+  - cd is a command used to change the current working directory
 
 ---
 
