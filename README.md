@@ -617,7 +617,7 @@ Use "copilot `[command]` --help" for more information about a command.
 
 ## Contributing
 
-Built with [GitHub Copilot](https://copilot.github.com/).
+Built with the help of [GitHub Copilot](https://copilot.github.com/).
 
 If like this project, please consider:
 1. Starring the [Project](https://github.com/wasertech/CodePilot)
