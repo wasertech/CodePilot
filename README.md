@@ -7,7 +7,7 @@ You need an active subscription to [GitHub Copilot](https://github.com/settings/
 
 ## Introduction
 
-CodePilot is a collection of shell scripts that wrap the [GitHub Copilot CLI](https://github.com/github/gh-copilot) into a more user-friendly interface through the use of various aliases and functions.
+CodePilot is a collection of shell scripts that wraps the [GitHub Copilot CLI](https://github.com/github/gh-copilot) into a more user-friendly interface through the use of various aliases and functions.
 
 Such as:
 
