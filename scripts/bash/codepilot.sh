@@ -167,6 +167,9 @@ function copilot_help() {
         echo "Too long; didn't read (the manual). Give me the gist of how to use this command:"
         echo "  tldr '<command>'"
         echo
+        echo "What is ... ?"
+        echo "  whatis '<command|concept>'"
+        echo
         echo "Use git to ..."
         echo "  use_git_to '<goal>'"
         echo
@@ -175,6 +178,9 @@ function copilot_help() {
         echo
         echo "Use the shell to ..."
         echo "  use_sh_to '<goal>'"
+        echo
+        echo "Use Docker to ..."
+        echo "  use_docker_to '<goal>'"
         echo
         echo "Explain ..."
         echo "  explain '<goal>'"
@@ -206,6 +212,27 @@ function copilot_help() {
                 ;;
             codepilot)
                 echo "To get help for the codepilot, run 'codepilot --help'."
+                ;;
+            howdoi)
+                echo "To get help for the howdoi command, run 'howdoi --help'."
+                ;;
+            tldr)
+                echo "To get help for the tldr command, run 'tldr --help'."
+                ;;
+            whatis)
+                echo "To get help for the whatis command, run 'whatis --help'."
+                ;;
+            use_git_to)
+                echo "To get help for the use_git_to command, run 'use_git_to --help'."
+                ;;
+            use_gh_to)
+                echo "To get help for the use_gh_to command, run 'use_gh_to --help'."
+                ;;
+            use_sh_to)
+                echo "To get help for the use_sh_to command, run 'use_sh_to --help'."
+                ;;
+            use_docker_to)
+                echo "To get help for the use_docker_to command, run 'use_docker_to --help'."
                 ;;
             *)
                 explain "how to get more information about '$@' behavior as a program in the command line"

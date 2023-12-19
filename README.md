@@ -103,6 +103,49 @@ _? Select an option_
 
 ---
 
+Based on `use_sh_to`, you can also ask for help with Docker.
+
+### Use Docker to ...
+
+Like with previous `use_*_to` commands, you can ask GitHub Copilot to help you with Docker.
+
+```shell
+❯ use_docker_to "navigate dirs"
+```
+
+Welcome to GitHub Copilot in the CLI!
+version 0.5.3-beta (2023-11-09)
+
+I'm powered by AI, so surprises and mistakes are possible. Make sure to verify any generated code or suggestions, and share feedback so that we can learn and improve.
+
+Suggestion not readily available. Please revise for better results.
+
+? _What would you like the shell command to do?_ 
+> load a volume and navigate to in in the container using bash as my entrypoint
+
+#### Suggestion:
+
+  ```shell
+  docker run -v /path/to/volume:/container/path -it image_name bash
+  ```
+
+? _Select an option_
+> Revise command
+
+? _How should this be revised?_ 
+> How would I navigate to /container/path once in the container?
+
+#### Suggestion:
+
+  ```shell
+  cd /container/path
+  ```
+
+? _Select an option_
+> Exit
+
+---
+
 Notice **some commands are designed to accept only certain arguments**, such as (but not limited to) command names.
 
 ### Help
@@ -224,6 +267,23 @@ _I'm powered by AI, so surprises and mistakes are possible. Make sure to verify 
 
 ---
 
+### What is ... ?
+
+```shell
+❯ whatis "cd"
+```
+
+**Welcome to GitHub Copilot in the CLI!**
+version 0.5.3-beta (2023-11-09)
+
+I'm powered by AI, so surprises and mistakes are possible. Make sure to verify any generated code or suggestions, and share feedback so that we can learn and improve.
+
+Explanation:                                                                                                                                         
+                                                                                                                                                     
+  • cd is a command used to change the current working directory
+
+---
+
 You don't have to remember all these commands. You can ask GitHub Copilot to remind you by asking for help.
 
 ```shell
@@ -269,6 +329,12 @@ Some useful commands:
   tldr '<command>'
   ```
 
+- What is ... ?
+  
+  ```shell
+  whatis '<command|concept>'
+  ```
+
 - Use git to ...
   
   ```shell
@@ -285,6 +351,12 @@ Some useful commands:
   
   ```shell
   use_sh_to '<goal>'
+  ```
+
+- Use Docker to ...
+  
+  ```shell
+  use_docker_to '<goal>'
   ```
 
 - Explain ...
@@ -329,6 +401,7 @@ Then hit enter and follow the instructions.
 
 ### Commands
 
+Some typical commands you can use with CodePilot are:
 
 #### Welcome
 
@@ -423,11 +496,15 @@ Then hit enter and follow the instructions.
 
 #### Explain
 
+Explain a command or a concept.
+
 ```shell
 ❯ explain 'what is a dbus session bus'
 ```
 
 #### Suggest
+
+Suggest a command to run.
 
 ```shell
 ❯ suggest -t shell "split csv using awk"
@@ -435,11 +512,15 @@ Then hit enter and follow the instructions.
 
 #### Use Git (command)
 
+Get help with Git.
+
 ```shell
 ❯ use_git_to 'Undo the most recent local commits'
 ```
 
 #### Use GitHub CLI
+
+Get help with GitHub CLI.
 
 ```shell
 ❯ use_gh_to 'Create pull request'
@@ -447,11 +528,15 @@ Then hit enter and follow the instructions.
 
 #### Use the Shell
 
+Get help with the shell.
+
 ```shell
 ❯ use_sh_to 'Kill processes holding onto deleted files'
 ```
 
 #### How do I ... ?
+
+Ask GitHub Copilot how to do something.
 
 ```shell
 ❯ howdoi 'print hello world'
@@ -466,6 +551,8 @@ Give me the gist of how to use this command.
 ```
 
 ### `copilot` `==` `codepilot`
+
+You can run CodePilot by using either `copilot` or `codepilot` commands interchangeably.
 
 ```shell
 ❯ which copilot
