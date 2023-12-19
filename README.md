@@ -107,7 +107,7 @@ Based on `use_sh_to`, you can also ask for help with Docker.
 
 ### Use Docker to ...
 
-Like with previous `use_*_to` commands, you can ask GitHub Copilot to help you with Docker.
+Like with previous `use_*_to` commands, you can converse with GitHub Copilot to sugesst the most adequate command. This time, for Docker.
 
 ```shell
 ❯ use_docker_to "navigate dirs"
