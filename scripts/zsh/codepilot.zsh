@@ -4,6 +4,41 @@
 
 zsh --version
 
+# Assert Git, GitHub CLI, and ssh-keygen are installed
+# If not, explain how to install them
+# If they are, continue
+
+# Assert Git is installed
+if [[ -z $(which git) ]]; then
+    echo "Git is not installed"
+    # distro=$(lsb_release -i | cut -f 2-)
+    # explain "how to install Git on $distro"
+    echo "Git is required to run CodePilot"
+    echo "Install Git using your package manager and re-run codepilot"
+    exit 1
+fi
+
+# Assert GitHub CLI is installed
+if [[ -z $(which gh) ]]; then
+    echo "GitHub CLI is not installed"
+    # distro=$(lsb_release -i | cut -f 2-)
+    # explain "how to install GitHub CLI on $distro"
+    echo "GitHub CLI is required to run CodePilot"
+    echo "Install GitHub CLI and re-run codepilot"
+    exit 1
+fi
+
+# Assert ssh-keygen is installed
+if [[ -z $(which ssh-keygen) ]]; then
+    echo "ssh-keygen is not installed"
+    # distro=$(lsb_release -i | cut -f 2-)
+    # explain "how to install ssh-keygen on $distro"
+    echo "ssh-keygen is required to run CodePilot"
+    distro=$(lsb_release -i | cut -f 2-)
+    suggest "install openssh on $distro" || echo "Install openssh and re-run codepilot"
+    exit 1
+fi
+
 codepilot="gh copilot"
 
 alias codepilot="$codepilot"
