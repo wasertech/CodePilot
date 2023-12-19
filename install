@@ -46,8 +46,7 @@ if [[ -f ~/.bashrc ]]; then
         echo "Sourcing codepilot script in ~/.bashrc"
         echo "source $local_bin_path/codepilot.sh" >> ~/.bashrc
     else
-        echo "CodePilot is already installed"
-        exit 0
+        echo "CodePilot is already sourced in ~/.bashrc"
     fi
 else
     echo "Sourcing codepilot script in ~/.bashrc"
@@ -60,8 +59,7 @@ if [[ -f ~/.zshrc ]]; then
         echo "Sourcing codepilot script in ~/.zshrc"
         echo "source $local_bin_path/codepilot.zsh" >> ~/.zshrc
     else
-        echo "CodePilot is already installed"
-        exit 0
+        echo "CodePilot is already sourced in ~/.zshrc"
     fi
 else
     echo "Sourcing codepilot script in ~/.zshrc"
