@@ -57,32 +57,32 @@ function git_ssh_login() {
 
     # Check if the ssh key already exists
 
-    if [[ -f ~/.ssh/id_$algo.pub ]]; then
-        echo "SSH key already exists; assuming you have already added it to your GitHub account"
-    else
-        echo "SSH key does not exist"
-        read -p "Enter the number of bits you want to use [4096]: " bits
+    # if [[ -f ~/.ssh/id_$algo.pub ]]; then
+    #     echo "SSH key already exists; assuming you have already added it to your GitHub account"
+    # else
+    echo "SSH key does not exist"
+    read -p "Enter the number of bits you want to use [4096]: " bits
 
-        if [[ -z $bits ]]; then
-            bits="4096"
-        fi
-
-        read -p "Enter the email address of your GitHub account [$HOST]: " email
-
-        if [[ -z $email ]]; then
-            email="$HOST"
-        fi
-
-        ssh-keygen -t $algo -b $bits -C "$email" && echo "SSH key generated successfully" || echo "SSH key generation failed" && return 1
-        
-        echo "Add the following SSH key to your GitHub account"
-        cat ~/.ssh/id_$algo.pub | xclip -selection clipboard && echo "SSH key copied to clipboard" || echo "Could not copy SSH key to clipboard (xclip not installed)"
-        
-        echo "Opening GitHub in the browser"
-        xdg-open "https://github.com/settings/keys" && echo "GitHub has been opened in the browser" || echo "Could not open GitHub in the browser (xdg-open not installed)"
-
-        read -p "Press any key to continue once you have added the SSH key to your GitHub account" -n 1 -s
+    if [[ -z $bits ]]; then
+        bits="4096"
     fi
+
+    read -p "Enter the email address of your GitHub account [$HOST]: " email
+
+    if [[ -z $email ]]; then
+        email="$HOST"
+    fi
+
+    ssh-keygen -t $algo -b $bits -C "$email" && echo "SSH key generated successfully" || echo "SSH key generation failed" && return 1
+    
+    echo "Add the following SSH key to your GitHub account"
+    cat ~/.ssh/id_$algo.pub | xclip -selection clipboard && echo "SSH key copied to clipboard" || echo "Could not copy SSH key to clipboard (xclip not installed)"
+    
+    echo "Opening GitHub in the browser"
+    xdg-open "https://github.com/settings/keys" && echo "GitHub has been opened in the browser" || echo "Could not open GitHub in the browser (xdg-open not installed)"
+
+    read -p "Press any key to continue once you have added the SSH key to your GitHub account" -n 1 -s
+    # fi
 
     echo "SSH key added to GitHub account"
 
