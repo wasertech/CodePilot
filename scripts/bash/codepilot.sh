@@ -85,7 +85,6 @@ function git_ssh_login() {
         xdg-open "https://github.com/settings/keys" && echo "GitHub has been opened in the browser" || echo "Could not open GitHub in the browser (xdg-open not installed)"
 
         read -p "Press any key to continue once you have added the SSH key to your GitHub account" -n 1 -s
-        # fi
 
         echo "SSH key added to GitHub account"
     fi
@@ -126,7 +125,9 @@ function git_login() {
 
 function gh_login() {
     echo "Logging in to GitHub CLI"
-    gh auth login --web -h github.com
+    gh auth login --web -h github.com || echo "Failed to log in to GitHub CLI" && return 1
+    echo "Successfully logged in to GitHub CLI"
+    return 0
 }
 
 function gh_copilot_install() {
@@ -134,8 +135,21 @@ function gh_copilot_install() {
 }
 
 function gh_copilot_login() {
-    git_login
-    gh_login
+    git_log=$(git_login)
+    if [[ $git_log -eq 0 ]]; then
+        echo "Successfully logged in to Git"
+    else
+        echo "Failed to log in to Git"
+        return 1
+    fi
+    
+    gh_log=$(gh_login)
+    if [[ $gh_log -eq 0 ]]; then
+        echo "Successfully logged in to GitHub CLI"
+    else
+        echo "Failed to log in to GitHub CLI"
+        return 1
+    fi
 }
 
 function check_copilot() {
