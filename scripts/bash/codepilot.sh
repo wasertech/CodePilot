@@ -151,13 +151,13 @@ function check_copilot() {
     version=$(gh copilot --version)
     if [[ -z $version ]]; then
         echo "GitHub Copilot CLI is not installed"
+        echo "Logging in to GitHub CLI"
+        gh_copilot_login && \
+        echo "Successfully logged in to GitHub CLI" || echo "Failed to log in to GitHub CLI" && return 1
         echo "Installing GitHub Copilot CLI"
         echo "Please wait..."
         gh_copilot_install && \
-        echo "GitHub Copilot CLI installed successfully"
-        echo "Logging in to GitHub Copilot CLI"
-        gh_copilot_login
-        echo "GitHub Copilot CLI login successful"
+        echo "GitHub Copilot CLI installed successfully" || echo "Failed to install GitHub Copilot CLI" && return 1
     fi
 
     return 0
