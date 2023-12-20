@@ -411,8 +411,9 @@ function welcome() {
 
 alias help='copilot_help'
 
-check_copilot && \
-echo
-echo "Your copilot is ready to help you! Type 'welcome' or 'help' to get started." \
-|| echo "Your copilot is not ready to help you. Please check the error messages above."
-echo
+pilot=$(check_copilot)
+if [[ $pilot -eq 0 ]]; then
+    echo "Your copilot is ready to help you! Type 'welcome' or 'help' to get started."
+else
+    echo "Your copilot is not ready to help you. Please check the error messages above."
+fi
