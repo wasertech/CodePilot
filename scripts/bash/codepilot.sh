@@ -77,6 +77,8 @@ function git_ssh_login() {
         echo "SSH key generated successfully"
     
         echo "Add the following SSH key to your GitHub account"
+        cat ~/.ssh/id_$algo.pub
+        echo
         cat ~/.ssh/id_$algo.pub | xclip -selection clipboard && echo "SSH key copied to clipboard" || echo "Could not copy SSH key to clipboard (xclip not installed)"
         
         echo "Opening GitHub in the browser"
@@ -112,7 +114,14 @@ function git_login() {
     git config --global user.name "$username"
     git config --global user.email "$email"
 
-    git_ssh_login && echo "Git login successful" && return 0 || echo "Git login failed" && return 1
+    log=$(git_ssh_login) || echo "Git login failed" && return 1
+    if [[ $log -eq 0 ]]; then
+        echo "Git login successful"
+        return 0
+    else
+        echo "Git login failed"
+        return 1
+    fi
 }
 
 function gh_login() {
@@ -125,11 +134,12 @@ function gh_copilot_install() {
 }
 
 function gh_copilot_login() {
-    git_login && gh_login
+    git_login
+    gh_login
 }
 
 function check_copilot() {
-    if [[ -z $(which git) ]]; then
+    if [[ -z $(which git 2> /dev/null) ]]; then
         echo "Git is not installed"
         # distro=$(lsb_release -i | cut -f 2-)
         # explain "how to install Git on $distro"
@@ -138,7 +148,7 @@ function check_copilot() {
         return 1
     fi
 
-    if [[ -z $(which gh) ]]; then
+    if [[ -z $(which gh 2> /dev/null) ]]; then
         echo "GitHub CLI is not installed"
         # distro=$(lsb_release -i | cut -f 2-)
         # explain "how to install GitHub CLI on $distro"
