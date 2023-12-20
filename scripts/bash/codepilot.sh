@@ -57,7 +57,7 @@ function git_ssh_login() {
 
     # Check if the ssh key already exists
 
-    if [[ -f ~/.ssh/id_$algo.pub ]]; then
+    if [[ -f ~/.ssh/id_$algo.pub  && -f ~/.ssh/id_$algo ]]; then
         echo "SSH key already exists; assuming you have already added it to your GitHub account"
     else
         echo "SSH key does not exist"
