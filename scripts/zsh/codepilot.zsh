@@ -73,7 +73,8 @@ function git_ssh_login() {
         email="$HOST"
     fi
 
-    ssh-keygen -t $algo -b $bits -C "$email" && echo "SSH key generated successfully" || echo "SSH key generation failed" && return 1
+    ssh-keygen -t $algo -b $bits -C "$email" || echo "SSH key generation failed" && return 1
+    echo "SSH key generated successfully"
     
     echo "Add the following SSH key to your GitHub account"
     cat ~/.ssh/id_$algo.pub | xclip -selection clipboard && echo "SSH key copied to clipboard" || echo "Could not copy SSH key to clipboard (xclip not installed)"
