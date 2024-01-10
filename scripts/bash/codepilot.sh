@@ -427,6 +427,8 @@ function codepilot_update() {
         exit 1
     fi
 
+    local_bin_path=~/.local/bin
+
     wget -O codepilot.sh https://raw.githubusercontent.com/wasertech/CodePilot/main/scripts/bash/codepilot.sh 2>/dev/null
     chmod +x codepilot.sh
 
