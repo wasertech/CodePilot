@@ -437,6 +437,11 @@ function codepilot_update() {
 
     mkdir -p $local_bin_path
 
+    # remove the codepilot script from $local_bin_path
+    echo "Removing old codepilot script from $local_bin_path"
+    rm -f $local_bin_path/codepilot.sh
+    rm -f $local_bin_path/codepilot.zsh
+
     # copy the codepilot script to $local_bin_path
     echo "Copying codepilot script to $local_bin_path"
     cp -f codepilot.sh codepilot.zsh $local_bin_path/
