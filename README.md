@@ -1,8 +1,8 @@
-<html>
-    <img src="assets/copilot.png" alt="Copilot" style="display: block; margin: 0 auto; border-radius: 50%; width: 200px; height: 200px;">
-    <br>
-    <h1 style="text-align: center;">CodePilot</h1>
-</html>
+<p align="center">
+    <img src="https://images.weserv.nl/?url=https://raw.githubusercontent.com/wasertech/CodePilot/main/assets/copilot.png?v=4&h=300&w=300&fit=cover&mask=circle&maxage=7d" alt="Copilot" style="display: block; margin: 0 auto; border-radius: 50%; width: 200px; height: 200px;">
+</p>
+<br>
+<h1 align="center">CodePilot</h1>
 
 Your AI command line copilot.
 
