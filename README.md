@@ -1,4 +1,9 @@
-# CodePilot
+<html>
+    <img src="assets/copilot.png" alt="Copilot" style="display: block; margin: 0 auto; border-radius: 50%; width: 200px; height: 200px;">
+    <br>
+    <h1 style="text-align: center;">CodePilot</h1>
+</html>
+
 Your AI command line copilot.
 
 > I'm powered by AI, so surprises and mistakes are possible. Make sure to verify any generated code or suggestions, and share feedback so that we can learn and improve.
