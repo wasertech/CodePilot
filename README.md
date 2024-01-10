@@ -615,9 +615,28 @@ Flags:
 Use "copilot `[command]` --help" for more information about a command.
 ```
 
+## Updating CodePilot
+
+When Copilot tells you there's a new version available, you can update GitHub Copilot CLI by running the following command:
+
+```shell
+❯ gh_copilot_install
+[copilot]: 
+upgraded from v0.5.3-beta to v0.5.4-beta
+✓ Successfully upgraded extension
+```
+
+Copilot will prompt you for a version number. You can either enter the version number you want to install or leave it blank to install the latest version. Then hit enter to confirm.
+
+If you want to update the shell scripts, you can run the following command:
+
+```shell
+codepilot_update
+```
+
 ## Contributing
 
-Built with the help of [GitHub Copilot](https://copilot.github.com/).
+Built with the help of [GitHub Copilot](https://copilot.github.com/). Inspired by [Howdoi](https://github.com/gleitz/howdoi), [tldr](https://github.com/tldr-pages/tldr) and [what-is-cli](https://github.com/zeke/what-is-cli).
 
 If like this project, please consider:
 1. Starring the [Project](https://github.com/wasertech/CodePilot)

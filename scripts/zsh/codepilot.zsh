@@ -4,10 +4,6 @@
 
 zsh --version
 
-# This script is used to run the CodePilot application.
-
-bash --version
-
 # Assert Git, GitHub CLI, and ssh-keygen are installed
 # If not, explain how to install them
 # If they are, continue
@@ -336,13 +332,20 @@ function tldr() {
 
 function whatis() {
     if [[ $# -eq 0 ]] || [ $@ = '--help' ]; then
-        echo "Usage: whatis <command|concept>"
+        /usr/bin/whatis --help || echo "Usage: whatis <command|concept>"
         return 1
     else
-        explain "what is $@ ?"
+        # check if whatis is installed
+        _whatis='/usr/bin/whatis'
+        if [[ ! -f $_whatis ]]; then
+            echo "whatis is not installed"
+        else
+            $_whatis $@
+        fi
+        
+        explain "what is '$@' ?"
     fi
     return 0
-
 }
 
 function use_git_to() {
@@ -412,6 +415,31 @@ function use_py_to(){
     else
         suggest -t shell "$@ in python"
     fi
+    return 0
+}
+
+function codepilot_update() {
+    echo "Updating CodePilot"
+    if [[ -z $(which wget) ]]; then
+        echo "wget is not installed"
+        distro=$(lsb_release -i | cut -f 2-)
+        echo "Please install wget on $distro"
+        exit 1
+    fi
+
+    wget -O codepilot.sh https://raw.githubusercontent.com/wasertech/CodePilot/main/scripts/bash/codepilot.sh 2>/dev/null
+    chmod +x codepilot.sh
+
+    wget -O codepilot.zsh https://raw.githubusercontent.com/wasertech/CodePilot/main/scripts/bash/codepilot.zsh 2>/dev/null
+    chmod +x codepilot.zsh
+
+    mkdir -p $local_bin_path
+
+    # copy the codepilot script to $local_bin_path
+    echo "Copying codepilot script to $local_bin_path"
+    cp -f codepilot.sh codepilot.zsh $local_bin_path/
+    echo "CodePilot updated successfully!"
+    echo "You might want to start a new shell session... or source the correct codepilot script."
     return 0
 }
 

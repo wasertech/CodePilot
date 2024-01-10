@@ -37,7 +37,8 @@ mkdir -p $local_bin_path
 # copy the codepilot script to $local_bin_path
 echo "Copying codepilot script to $local_bin_path"
 cp -f codepilot.sh codepilot.zsh $local_bin_path/
-# source the codepilot script in ~/.bashrc
+
+# source the codepilot script in ~/.(ba|z)shrc
 # only if it is not already sourced
 
 echo "Handling bash"
