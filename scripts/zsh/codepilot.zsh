@@ -196,7 +196,7 @@ function clean_output(){
         split_word="# Explanation:"
     fi
     # cmd_out=$(explain "what is hello world in bash")
-    _out=$(python -c "cmd_out='''$cmd_out'''; split=cmd_out.split('${split_word}'); _out = '\n'.join([ l for l in split[1].split('\n')[1:]]) if len(split) >= 2 else cmd_out; print(_out)")
+    _out=$(python3 -c "cmd_out='''$cmd_out'''; split=cmd_out.split('${split_word}'); _out = '\n'.join([ l for l in split[1].split('\n')[1:]]) if len(split) >= 2 else cmd_out; print(_out)")
     echo "$_out"
     return 0
 }
@@ -413,7 +413,7 @@ function use_py_to(){
         echo "Example: use_py_to 'Display a window with a button to exit'"
         return 1
     else
-        suggest -t shell "$@ in python"
+        suggest -t shell "$@ in python3"
     fi
     return 0
 }
