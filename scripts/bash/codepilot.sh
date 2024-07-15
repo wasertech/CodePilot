@@ -2,6 +2,18 @@
 
 # This script is used to run the CodePilot application.
 
+ANSI_ITALIC="\e[3m"
+ANSI_BOLD="\e[1m"
+ANSI_RESET="\e[0m"
+ANSI_YELLOW="\e[33m"
+ANSI_CMD="${ANSI_ITALIC}${ANSI_YELLOW}"
+
+DISPLAY_COPILOT_CMD="${ANSI_CMD}copilot${ANSI_RESET}"
+DISPLAY_COPILOT="${ANSI_ITALIC}${ANSI_BOLD}CodePilot${ANSI_RESET}"
+DISPLAY_GH="${ANSI_ITALIC}${ANSI_BOLD}GitHub CLI${ANSI_RESET}"
+DISPLAY_GIT="${ANSI_ITALIC}${ANSI_BOLD}Git${ANSI_RESET}"
+DISPLAY_SSH="${ANSI_ITALIC}${ANSI_BOLD}ssh-keygen${ANSI_RESET}"
+
 bash --version
 
 # Assert Git, GitHub CLI, and ssh-keygen are installed
@@ -10,32 +22,32 @@ bash --version
 
 # Assert Git is installed
 if [[ -z $(which git) ]]; then
-    echo "Git is not installed"
+    echo -e "${DISPLAY_GIT} is not installed"
     # distro=$(lsb_release -i | cut -f 2-)
     # explain "how to install Git on $distro"
-    echo "Git is required to run CodePilot"
-    echo "Install Git using your package manager and re-run codepilot"
+    echo -e "${DISPLAY_GIT} is required to run ${DISPLAY_COPILOT}"
+    echo -e "Install ${DISPLAY_GIT} using your package manager and re-run '${DISPLAY_COPILOT_CMD}'"
     exit 1
 fi
 
 # Assert GitHub CLI is installed
 if [[ -z $(which gh) ]]; then
-    echo "GitHub CLI is not installed"
+    echo -e "${DISPLAY_GH} is not installed"
     # distro=$(lsb_release -i | cut -f 2-)
     # explain "how to install GitHub CLI on $distro"
-    echo "GitHub CLI is required to run CodePilot"
-    echo "Install GitHub CLI and re-run codepilot"
+    echo -e "${DISPLAY_GH} is required to run ${DISPLAY_COPILOT}"
+    echo -e "Install ${DISPLAY_GH} and re-run '${DISPLAY_COPILOT_CMD}'"
     exit 1
 fi
 
 # Assert ssh-keygen is installed
 if [[ -z $(which ssh-keygen) ]]; then
-    echo "ssh-keygen is not installed"
+    echo -e "${DISPLAY_SSH} is not installed"
     # distro=$(lsb_release -i | cut -f 2-)
     # explain "how to install ssh-keygen on $distro"
-    echo "ssh-keygen is required to run CodePilot"
+    echo -e "${DISPLAY_SSH} is required to run ${DISPLAY_COPILOT}"
     distro=$(lsb_release -i | cut -f 2-)
-    suggest "install openssh on $distro" || echo "Install openssh and re-run codepilot"
+    suggest "install openssh on $distro" || echo -e "Install ${ANSI_ITALIC}${ANSI_BOLD}openssh${ANSI_RESET} and re-run '${DISPLAY_COPILOT_CMD}'"
     exit 1
 fi
 
@@ -79,10 +91,10 @@ function git_ssh_login() {
         echo "Add the following SSH key to your GitHub account"
         cat ~/.ssh/id_$algo.pub
         echo
-        cat ~/.ssh/id_$algo.pub | xclip -selection clipboard && echo "SSH key copied to clipboard" || echo "Could not copy SSH key to clipboard (xclip not installed)"
+        cat ~/.ssh/id_$algo.pub | xclip -selection clipboard && echo -e "SSH key copied to clipboard" || echo "Could not copy SSH key to clipboard (${ANSI_ITALIC}${ANSI_BOLD}xclip${ANSI_RESET} not installed)"
         
-        echo "Opening GitHub in the browser"
-        xdg-open "https://github.com/settings/keys" && echo "GitHub has been opened in the browser" || echo "Could not open GitHub in the browser (xdg-open not installed)"
+        echo "Opening GitHub in the browser..."
+        xdg-open "https://github.com/settings/keys" && echo "GitHub has been opened in the browser" || echo -e "Could not open GitHub in the browser (${ANSI_ITALIC}${ANSI_BOLD}xdg-open${ANSI_RESET} not installed)"
 
         read -p "Press any key to continue once you have added the SSH key to your GitHub account" -n 1 -s
 
@@ -124,8 +136,8 @@ function git_login() {
 }
 
 function gh_login() {
-    echo "Logging in to GitHub CLI"
-    gh auth login --web -h github.com || echo "Failed to log in to GitHub CLI" && return 1
+    echo "Logging into GitHub CLI"
+    gh auth login --web -h github.com || echo "Failed to log into GitHub CLI" && return 1
     echo "Successfully logged in to GitHub CLI"
     return 0
 }
@@ -157,8 +169,8 @@ function check_copilot() {
         echo "Git is not installed"
         # distro=$(lsb_release -i | cut -f 2-)
         # explain "how to install Git on $distro"
-        echo "Git is required to run CodePilot"
-        echo "Install Git and re-run codepilot"
+        echo -e "Git is required to run ${DISPLAY_COPILOT}"
+        echo -e "Install Git and re-run '${ANSI_COPILOT_CMD}'"
         return 1
     fi
 
@@ -166,8 +178,8 @@ function check_copilot() {
         echo "GitHub CLI is not installed"
         # distro=$(lsb_release -i | cut -f 2-)
         # explain "how to install GitHub CLI on $distro"
-        echo "GitHub CLI is required to run CodePilot"
-        echo "Install GitHub CLI and re-run codepilot"
+        echo -e "GitHub CLI is required to run ${DISPLAY_COPILOT}"
+        echo -e "Install GitHub CLI and re-run '${ANSI_COPILOT_CMD}'"
         return 1
     fi
 
@@ -189,7 +201,7 @@ function check_copilot() {
 
 function clean_output(){
     if [[ $# -eq 0 ]]; then
-        echo "Usage: clean_output <output>"
+        echo -e "Usage: ${ANSI_CMD}clean_output <output>${ANSI_RESET}"
         return 1
     else
         cmd_out=$@
@@ -220,86 +232,86 @@ function copilot_help() {
         echo "Some useful commands:"
         echo
         echo "Get help for a particular command"
-        echo "  help <command>"
+        echo -e "  ${ANSI_CMD}help <command>${ANSI_RESET}"
         echo
         echo "How do I ... ?"
-        echo "  howdoi '<goal>'"
+        echo -e "  ${ANSI_CMD}howdoi '<goal>'${ANSI_RESET}"
         echo
         echo "Too long; didn't read (the manual). Give me the gist of how to use this command:"
-        echo "  tldr '<command>'"
+        echo -e "  ${ANSI_CMD}tldr '<command>'${ANSI_RESET}"
         echo
         echo "What is ... ?"
-        echo "  whatis '<command|concept>'"
+        echo -e "  ${ANSI_CMD}whatis '<command|concept>'${ANSI_RESET}"
         echo
         echo "Use git to ..."
-        echo "  use_git_to '<goal>'"
+        echo -e "  ${ANSI_CMD}use_git_to '<goal>'${ANSI_RESET}"
         echo
         echo "Use GitHub CLI to ..."
-        echo "  use_gh_to '<goal>'"
+        echo -e "  ${ANSI_CMD}use_gh_to '<goal>'${ANSI_RESET}"
         echo
         echo "Use the shell to ..."
-        echo "  use_sh_to '<goal>'"
+        echo -e "  ${ANSI_CMD}use_sh_to '<goal>'${ANSI_RESET}"
         echo
         echo "Use Docker to ..."
-        echo "  use_docker_to '<goal>'"
+        echo -e "  ${ANSI_CMD}use_docker_to '<goal>'${ANSI_RESET}"
         echo
         echo "Use Python to ..."
-        echo "  use_py_to '<goal>'"
+        echo -e "  ${ANSI_CMD}use_py_to '<goal>'${ANSI_RESET}"
         echo
         echo "Explain ..."
-        echo "  explain '<goal>'"
+        echo -e "  ${ANSI_CMD}explain '<goal>'${ANSI_RESET}"
         echo
         echo "Suggest Command Interactively"
-        echo "  suggest"
+        echo -e "  ${ANSI_CMD}suggest${ANSI_RESET}"
         echo
         echo "Suggest [Git, GitHub, Shell] Command to ..."
-        echo "  suggest -t [git|gh|shell] '<goal>'"
+        echo -e "  ${ANSI_CMD}suggest -t [git|gh|shell] '<goal>'${ANSI_RESET}"
     elif [ $@ = '--help' ]; then
         echo "(Meta)Help"
         echo "Get help about a command."
         echo
-        echo "Usage: help <command>"
-        echo "Example: help nano"
-        echo "Example: help --help"
-        echo "Example: help"
+        echo -e "Usage: ${ANSI_CMD}help <command>${ANSI_RESET}"
+        echo -e "Example: ${ANSI_CMD}help nano${ANSI_RESET}"
+        echo -e "Example: ${ANSI_CMD}help --help${ANSI_RESET}"
+        echo -e "Example: ${ANSI_CMD}help${ANSI_RESET}"
         return 0
     else
         case $1 in
             suggest)
-                echo "To get help for the suggest command, run 'suggest --help'."
+                echo -e "To get help for the suggest command, run '${ANSI_CMD}suggest --help${ANSI_RESET}'."
                 ;;
             explain)
-                echo "To get help for the explain command, run 'explain --help'."
+                echo -e "To get help for the explain command, run '${ANSI_CMD}explain --help${ANSI_RESET}'."
                 ;;
             copilot)
-                echo "To get help for the copilot, run 'copilot --help'."
+                echo -e "To get help for the copilot, run '${ANSI_CMD}copilot --help${ANSI_RESET}'."
                 ;;
             codepilot)
-                echo "To get help for the codepilot, run 'codepilot --help'."
+                echo -e "To get help for the codepilot, run '${ANSI_CMD}codepilot --help${ANSI_RESET}'."
                 ;;
             howdoi)
-                echo "To get help for the howdoi command, run 'howdoi --help'."
+                echo -e "To get help for the howdoi command, run '${ANSI_CMD}howdoi --help${ANSI_RESET}'."
                 ;;
             tldr)
-                echo "To get help for the tldr command, run 'tldr --help'."
+                echo -e "To get help for the tldr command, run '${ANSI_CMD}tldr --help${ANSI_RESET}'."
                 ;;
             whatis)
-                echo "To get help for the whatis command, run 'whatis --help'."
+                echo -e "To get help for the whatis command, run '${ANSI_CMD}whatis --help${ANSI_RESET}'."
                 ;;
             use_git_to)
-                echo "To get help for the use_git_to command, run 'use_git_to --help'."
+                echo -e "To get help for the use_git_to command, run '${ANSI_CMD}use_git_to --help${ANSI_RESET}'."
                 ;;
             use_gh_to)
-                echo "To get help for the use_gh_to command, run 'use_gh_to --help'."
+                echo -e "To get help for the use_gh_to command, run '${ANSI_CMD}use_gh_to --help${ANSI_RESET}'."
                 ;;
             use_sh_to)
-                echo "To get help for the use_sh_to command, run 'use_sh_to --help'."
+                echo -e "To get help for the use_sh_to command, run '${ANSI_CMD}use_sh_to --help${ANSI_RESET}'."
                 ;;
             use_docker_to)
-                echo "To get help for the use_docker_to command, run 'use_docker_to --help'."
+                echo -e "To get help for the use_docker_to command, run '${ANSI_CMD}use_docker_to --help${ANSI_RESET}'."
                 ;;
             use_py_to)
-                echo "To get help for the use_py_to command, run 'use_py_to --help'."
+                echo -e "To get help for the use_py_to command, run '${ANSI_CMD}use_py_to --help${ANSI_RESET}'."
                 ;;
             *)
                 explain "how to get more information about '$@' behavior as a program in the command line"
@@ -312,7 +324,7 @@ function copilot_help() {
 
 function howdoi() {
     if [[ $# -eq 0 ]] || [ $@ = '--help' ]; then
-        echo "Usage: howdoi <goal>"
+        echo -e "Usage: ${ANSI_CMD}howdoi <goal>${ANSI_RESET}"
         return 1
     else
         explain "How do I $@ ?"
@@ -322,7 +334,7 @@ function howdoi() {
 
 function tldr() {
     if [[ $# -eq 0 ]] || [ $@ = '--help' ]; then
-        echo "Usage: tldr <command>"
+        echo -e "Usage: ${ANSI_CMD}tldr <command>${ANSI_RESET}"
         return 1
     else
         explain "How do I use $@ ? Give me a tldr of example usages."
@@ -332,7 +344,7 @@ function tldr() {
 
 function whatis() {
     if [[ $# -eq 0 ]] || [ $@ = '--help' ]; then
-        /usr/bin/whatis --help || echo "Usage: whatis <command|concept>"
+        /usr/bin/whatis --help || echo -e "Usage: ${ANSI_CMD}whatis <command|concept>${ANSI_RESET}"
         return 1
     else
         # check if whatis is installed
@@ -350,10 +362,10 @@ function whatis() {
 
 function use_git_to() {
     if [[ $# -eq 0 ]] || [ $@ = '--help' ]; then
-        echo "Usage: use_git_to <goal>"
-        echo "Example: use_git_to 'Undo the most recent local commits'"
-        echo "Example: use_git_to 'Clean up local branches'"
-        echo "Example: use_git_to 'Setup LFS for images'"
+        echo -e "Usage: ${ANSI_CMD}use_git_to <goal>${ANSI_RESET}"
+        echo -e "Example: ${ANSI_CMD}use_git_to 'Undo the most recent local commits'${ANSI_RESET}"
+        echo -e "Example: ${ANSI_CMD}use_git_to 'Clean up local branches'${ANSI_RESET}"
+        echo -e "Example: ${ANSI_CMD}use_git_to 'Setup LFS for images'${ANSI_RESET}"
         return 1
     else
         suggest -t git "$@"
@@ -363,10 +375,10 @@ function use_git_to() {
 
 function use_gh_to() {
     if [[ $# -eq 0 ]] || [ $@ = '--help' ]; then
-        echo "Usage: use_gh_to <goal>"
-        echo "Example: use_gh_to 'Create pull request'"
-        echo "Example: use_gh_to 'List pull requests waiting for my review'"
-        echo "Example: use_gh_to 'Summarize work I have done in issues and pull requests for promotion'"
+        echo -e "Usage: ${ANSI_CMD}use_gh_to <goal>"
+        echo -e "Example: ${ANSI_CMD}use_gh_to 'Create pull request'${ANSI_RESET}"
+        echo -e "Example: ${ANSI_CMD}use_gh_to 'List pull requests waiting for my review'${ANSI_RESET}"
+        echo -e "Example: ${ANSI_CMD}use_gh_to 'Summarize work I have done in issues and pull requests for promotion'${ANSI_RESET}"
         return 1
     else
         suggest -t gh "$@"
@@ -376,11 +388,11 @@ function use_gh_to() {
 
 function use_sh_to() {
     if [[ $# -eq 0 ]]; then
-        echo "Usage: use_sh_to <goal>"
-        echo "Example: use_sh_to 'Kill processes holding onto deleted files' "
-        echo "Example: use_sh_to 'Test whether there are SSL/TLS issues with github.com' "
-        echo "Example: use_sh_to 'Convert SVG to PNG and resize' "
-        echo "Example: use_sh_to 'Convert MOV to animated PNG' "
+        echo -e "Usage: ${ANSI_CMD}use_sh_to <goal>${ANSI_RESET}"
+        echo -e "Example: ${ANSI_CMD}use_sh_to 'Kill processes holding onto deleted files'${ANSI_RESET}"
+        echo -e "Example: ${ANSI_CMD}use_sh_to 'Test whether there are SSL/TLS issues with github.com'${ANSI_RESET}"
+        echo -e "Example: ${ANSI_CMD}use_sh_to 'Convert SVG to PNG and resize'${ANSI_RESET}"
+        echo -e "Example: ${ANSI_CMD}use_sh_to 'Convert MOV to animated PNG'${ANSI_RESET}"
         return 1
     else
         suggest -t shell "$@"
@@ -390,11 +402,11 @@ function use_sh_to() {
 
 function use_docker_to() {
     if [[ $# -eq 0 ]]; then
-        echo "Usage: use_docker_to <goal>"
-        echo "Example: use_docker_to 'List all running containers'"
-        echo "Example: use_docker_to 'List all images'"
-        echo "Example: use_docker_to 'List all volumes'"
-        echo "Example: use_docker_to 'List all networks'"
+        echo -e "Usage: ${ANSI_CMD}use_docker_to <goal>${ANSI_RESET}"
+        echo -e "Example: ${ANSI_CMD}use_docker_to 'List all running containers'${ANSI_RESET}"
+        echo -e "Example: ${ANSI_CMD}use_docker_to 'List all images'${ANSI_RESET}"
+        echo -e "Example: ${ANSI_CMD}use_docker_to 'List all volumes'${ANSI_RESET}"
+        echo -e "Example: ${ANSI_CMD}use_docker_to 'List all networks'${ANSI_RESET}"
         return 1
     else
         suggest -t shell "$@ using Docker"
@@ -406,11 +418,11 @@ function use_py_to(){
     if [[ $# -eq 0 ]]; then
         echo "Use Python to ..."
         echo
-        echo "Usage: use_py_to <goal>"
-        echo "Example: use_py_to 'Convert a string to lowercase'"
-        echo "Example: use_py_to 'Strip string of whitespace and linebreaks'"
-        echo "Example: use_py_to 'Display simple progress bar'"
-        echo "Example: use_py_to 'Display a window with a button to exit'"
+        echo -e "Usage: ${ANSI_CMD}use_py_to <goal>${ANSI_RESET}"
+        echo -e "Example: ${ANSI_CMD}use_py_to 'Convert a string to lowercase'${ANSI_RESET}"
+        echo -e "Example: ${ANSI_CMD}use_py_to 'Strip string of whitespace and linebreaks'${ANSI_RESET}"
+        echo -e "Example: ${ANSI_CMD}use_py_to 'Display simple progress bar'${ANSI_RESET}"
+        echo -e "Example: ${ANSI_CMD}use_py_to 'Display a window with a button to exit'${ANSI_RESET}"
         return 1
     else
         suggest -t shell "$@ in python3"
@@ -421,9 +433,9 @@ function use_py_to(){
 function codepilot_update() {
     echo "Updating CodePilot"
     if [[ -z $(which wget) ]]; then
-        echo "wget is not installed"
+        echo -e "${ANSI_CMD}wget${ANSI_RESET} is not installed"
         distro=$(lsb_release -i | cut -f 2-)
-        echo "Please install wget on $distro"
+        echo -e "Please install ${ANSI_CMD}wget${ANSI_RESET} on $distro"
         exit 1
     fi
 
@@ -456,8 +468,8 @@ function welcome() {
     echo "Here how to operate the shell:" && \
     explain 'how to operate the shell' || echo "Unfortunately, I wasn't able to create a guide for you to operate the shell."
     echo
-    echo "To get some help you can type 'help'."
-    echo "Type 'exit' to exit the shell."
+    echo -e "To get some help you can type '${ANSI_CMD}help${ANSI_RESET}'."
+    echo -e "Type '${ANSI_CMD}exit${ANSI_RESET}' to exit the shell."
     echo
     return 0
 }
@@ -466,7 +478,7 @@ alias help='copilot_help'
 
 pilot=$(check_copilot)
 if [[ $pilot -eq 0 ]]; then
-    echo "Your copilot is ready to help you! Type 'welcome' or 'help' to get started."
+    echo -e "Your copilot is ready to help you! Type '${ANSI_CMD}welcome${ANSI_RESET}' or '${ANSI_CMD}help${ANSI_RESET}' to get started."
 else
-    echo "Your copilot is not ready to help you. Please check the error messages above."
+    echo -e "Your copilot is not ready to help you. Please check for error message(s) above."
 fi
