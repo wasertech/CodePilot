@@ -10,6 +10,47 @@ Your AI command line copilot.
 
 You need an active subscription to [GitHub Copilot](https://github.com/settings/copilot) to use this tool.
 
+## Table of Content
+
+- [Table of Content](#table-of-content)
+- [Introduction](#introduction)
+  - [Explain](#explain)
+    - [Explanation:](#explanation)
+  - [How do I?](#how-do-i)
+    - [Explanation:](#explanation-1)
+  - [Use the Shell to ...](#use-the-shell-to-)
+    - [Suggestion:](#suggestion)
+  - [Use Docker to ...](#use-docker-to-)
+    - [Suggestion:](#suggestion-1)
+    - [Suggestion:](#suggestion-2)
+  - [Help](#help)
+    - [Explanation:](#explanation-2)
+    - [Explanation:](#explanation-3)
+    - [Explanation:](#explanation-4)
+  - [Too long; didn't read (the manual)](#too-long-didnt-read-the-manual)
+    - [Explanation:](#explanation-5)
+  - [What is ... ?](#what-is--)
+    - [Explanation:](#explanation-6)
+- [Pre-requisites](#pre-requisites)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Commands](#commands)
+    - [Welcome](#welcome)
+    - [Help](#help-1)
+    - [Explain](#explain-1)
+    - [Suggest](#suggest)
+    - [Use Git (command)](#use-git-command)
+    - [Use GitHub CLI](#use-github-cli)
+    - [Use the Shell](#use-the-shell)
+    - [Use Docker](#use-docker)
+    - [Use Python](#use-python)
+    - [How do I ... ?](#how-do-i--)
+    - [Too long; didn't read (the manual page)](#too-long-didnt-read-the-manual-page)
+  - [`copilot` `==` `codepilot`](#copilot--codepilot)
+- [Updating CodePilot](#updating-codepilot)
+- [Contributing](#contributing)
+- [License](#license)
+
 ## Introduction
 
 CodePilot is a collection of shell scripts that wraps the [GitHub Copilot CLI](https://github.com/github/gh-copilot) into a more user-friendly interface through the use of various aliases and functions.
