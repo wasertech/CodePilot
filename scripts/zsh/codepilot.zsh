@@ -424,6 +424,10 @@ function can_you_please() {
     return 0
 }
 
+alias could_you_please='can_you_please'
+alias can_you='can_you_please'
+alias could_you='can_you_please'
+
 function use_docker_to() {
     if [[ $# -eq 0 ]]; then
         echo -e "Usage: ${ANSI_CMD}use_docker_to <goal>${ANSI_RESET}"
