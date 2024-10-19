@@ -51,12 +51,16 @@ if [[ -z $(which ssh-keygen) ]]; then
     exit 1
 fi
 
+eval "$(gh copilot alias -- bash)"
+
 codepilot="gh copilot"
 
 alias codepilot="$codepilot"
 alias copilot="$codepilot"
-alias suggest="${codepilot} suggest"
-alias _explain="${codepilot} explain"
+# alias suggest="${codepilot} suggest -s bash"
+alias suggest="ghcs"
+# alias _explain="${codepilot} explain"
+alias _explain="ghce"
 
 function git_ssh_login() {
     howdoi "login with ssh with git"
@@ -322,6 +326,7 @@ function copilot_help() {
     return 0
 }
 
+# How do I ...
 function howdoi() {
     if [[ $# -eq 0 ]] || [ $@ = '--help' ]; then
         echo -e "Usage: ${ANSI_CMD}howdoi <goal>${ANSI_RESET}"
@@ -332,6 +337,7 @@ function howdoi() {
     return 0
 }
 
+# Too long; didn't read (the manual)
 function tldr() {
     if [[ $# -eq 0 ]] || [ $@ = '--help' ]; then
         echo -e "Usage: ${ANSI_CMD}tldr <command>${ANSI_RESET}"
@@ -342,6 +348,7 @@ function tldr() {
     return 0
 }
 
+# What is ...
 function whatis() {
     if [[ $# -eq 0 ]] || [ $@ = '--help' ]; then
         /usr/bin/whatis --help || echo -e "Usage: ${ANSI_CMD}whatis <command|concept>${ANSI_RESET}"
@@ -360,6 +367,7 @@ function whatis() {
     return 0
 }
 
+# Use git to ...
 function use_git_to() {
     if [[ $# -eq 0 ]] || [ $@ = '--help' ]; then
         echo -e "Usage: ${ANSI_CMD}use_git_to <goal>${ANSI_RESET}"
@@ -368,11 +376,12 @@ function use_git_to() {
         echo -e "Example: ${ANSI_CMD}use_git_to 'Setup LFS for images'${ANSI_RESET}"
         return 1
     else
-        suggest -t git "$@"
+        suggest -t git "$@" -s bash
     fi
     return 0
 }
 
+# Use GitHub CLI to ...
 function use_gh_to() {
     if [[ $# -eq 0 ]] || [ $@ = '--help' ]; then
         echo -e "Usage: ${ANSI_CMD}use_gh_to <goal>"
@@ -381,11 +390,12 @@ function use_gh_to() {
         echo -e "Example: ${ANSI_CMD}use_gh_to 'Summarize work I have done in issues and pull requests for promotion'${ANSI_RESET}"
         return 1
     else
-        suggest -t gh "$@"
+        suggest -t gh "$@" -s bash
     fi
     return 0
 }
 
+# Use shell to ...
 function use_sh_to() {
     if [[ $# -eq 0 ]]; then
         echo -e "Usage: ${ANSI_CMD}use_sh_to <goal>${ANSI_RESET}"
@@ -395,7 +405,27 @@ function use_sh_to() {
         echo -e "Example: ${ANSI_CMD}use_sh_to 'Convert MOV to animated PNG'${ANSI_RESET}"
         return 1
     else
-        suggest -t shell "$@"
+        suggest -t shell "$@" -s bash
+    fi
+    return 0
+}
+
+
+# Can you please
+function can_you_please() {
+    if [[ $# -eq 0 ]]; then
+        echo -e "Usage: ${ANSI_CMD}can_you_please <goal>${ANSI_RESET}"
+        echo -e "Example: ${ANSI_CMD}can_you_please 'Kill processes holding onto deleted files'${ANSI_RESET}"
+        echo -e "Example: ${ANSI_CMD}can_you_please 'Test whether there are SSL/TLS issues with github.com'${ANSI_RESET}"
+        echo -e "Example: ${ANSI_CMD}can_you_please 'Convert SVG to PNG and resize'${ANSI_RESET}"
+        echo -e "Example: ${ANSI_CMD}can_you_please 'Convert MOV to animated PNG'${ANSI_RESET}"
+        return 1
+    else
+        # Warning: It's very experimental to execute commands in the shell
+        echo "I can certainly try. And if you like my solution, please simple copy the command I'll suggest and I'll take care of the rest."
+        # suggest -t shell "$@" -s bash
+        # Can you please "show pids" ≃ Use the shell to "show pids"
+        use_sh_to "$@"
     fi
     return 0
 }

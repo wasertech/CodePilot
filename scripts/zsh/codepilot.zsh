@@ -51,17 +51,21 @@ if [[ -z $(which ssh-keygen) ]]; then
     exit 1
 fi
 
+eval "$(gh copilot alias -- zsh)"
+
 codepilot="gh copilot"
 
 alias codepilot="$codepilot"
 alias copilot="$codepilot"
-alias suggest="${codepilot} suggest"
-alias _explain="${codepilot} explain"
+# alias suggest="${codepilot} suggest -s zsh"
+alias suggest="ghcs"
+# alias _explain="${codepilot} explain"
+alias _explain="ghce"
 
 function git_ssh_login() {
     howdoi "login with ssh with git"
 
-    read -p "Enter the encryption algorithm you want to use [rsa]: " algo
+    read "Enter the encryption algorithm you want to use [rsa]: " algo
 
     if [[ -z $algo ]]; then
         algo="rsa"
@@ -73,13 +77,13 @@ function git_ssh_login() {
         echo "SSH key already exists; assuming you have already added it to your GitHub account"
     else
         echo "SSH key does not exist"
-        read -p "Enter the number of bits you want to use [4096]: " bits
+        read "Enter the number of bits you want to use [4096]: " bits
 
         if [[ -z $bits ]]; then
             bits="4096"
         fi
 
-        read -p "Enter the email address of your GitHub account [$HOST]: " email
+        read "Enter the email address of your GitHub account [$HOST]: " email
 
         if [[ -z $email ]]; then
             email="$HOST"
@@ -96,7 +100,7 @@ function git_ssh_login() {
         echo "Opening GitHub in the browser..."
         xdg-open "https://github.com/settings/keys" && echo "GitHub has been opened in the browser" || echo -e "Could not open GitHub in the browser (${ANSI_ITALIC}${ANSI_BOLD}xdg-open${ANSI_RESET} not installed)"
 
-        read -p "Press any key to continue once you have added the SSH key to your GitHub account" -n 1 -s
+        read "Press any key to continue once you have added the SSH key to your GitHub account" -n 1 -s
 
         echo "SSH key added to GitHub account"
     fi
@@ -108,14 +112,14 @@ function git_ssh_login() {
 function git_login() {
     howdoi "login with git"
 
-    read -p "Enter your GitHub username: " username
+    read "Enter your GitHub username: " username
 
     if [[ -z $username ]]; then
         echo "Username cannot be empty"
         return 1
     fi
 
-    read -p "Enter your GitHub email address: " email
+    read "Enter your GitHub email address: " email
 
     if [[ -z $email ]]; then
         echo "Email address cannot be empty"
@@ -368,7 +372,7 @@ function use_git_to() {
         echo -e "Example: ${ANSI_CMD}use_git_to 'Setup LFS for images'${ANSI_RESET}"
         return 1
     else
-        suggest -t git "$@"
+        suggest -t git "$@" -s zsh
     fi
     return 0
 }
@@ -381,7 +385,7 @@ function use_gh_to() {
         echo -e "Example: ${ANSI_CMD}use_gh_to 'Summarize work I have done in issues and pull requests for promotion'${ANSI_RESET}"
         return 1
     else
-        suggest -t gh "$@"
+        suggest -t gh "$@" -s zsh
     fi
     return 0
 }
@@ -395,7 +399,27 @@ function use_sh_to() {
         echo -e "Example: ${ANSI_CMD}use_sh_to 'Convert MOV to animated PNG'${ANSI_RESET}"
         return 1
     else
-        suggest -t shell "$@"
+        suggest -t shell "$@" -s zsh
+    fi
+    return 0
+}
+
+
+# Can you please
+function can_you_please() {
+    if [[ $# -eq 0 ]]; then
+        echo -e "Usage: ${ANSI_CMD}can_you_please <goal>${ANSI_RESET}"
+        echo -e "Example: ${ANSI_CMD}can_you_please 'Kill processes holding onto deleted files'${ANSI_RESET}"
+        echo -e "Example: ${ANSI_CMD}can_you_please 'Test whether there are SSL/TLS issues with github.com'${ANSI_RESET}"
+        echo -e "Example: ${ANSI_CMD}can_you_please 'Convert SVG to PNG and resize'${ANSI_RESET}"
+        echo -e "Example: ${ANSI_CMD}can_you_please 'Convert MOV to animated PNG'${ANSI_RESET}"
+        return 1
+    else
+        # Warning: It's very experimental to execute commands in the shell
+        echo "I can certainly try. And if you like my solution, please simple copy the command I'll suggest and I'll take care of the rest."
+        # suggest -t shell "$@" -s zsh
+        # Can you please "show pids" ≃ Use the shell to "show pids"
+        use_sh_to "$@"
     fi
     return 0
 }

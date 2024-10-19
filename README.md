@@ -46,6 +46,7 @@ You need an active subscription to [GitHub Copilot](https://github.com/settings/
     - [Use Python](#use-python)
     - [How do I ... ?](#how-do-i--)
     - [Too long; didn't read (the manual page)](#too-long-didnt-read-the-manual-page)
+    - [Can you please ... ?](#can-you-please--)
   - [`copilot` `==` `codepilot`](#copilot--codepilot)
 - [Updating CodePilot](#updating-codepilot)
 - [Contributing](#contributing)
@@ -616,6 +617,38 @@ Give me the gist of how to use this command.
 
 ```shell
 ❯ tldr 'git commit'
+```
+
+#### Can you please ... ?
+
+Can you please suggest a command to execute?
+
+```shell
+❯ can_you_please show me my running processes
+I can certainly try. Who knows maybe you'll like my solution, if so please simply copy the command I'll suggest and I'll take care of the rest.
+
+Welcome to GitHub Copilot in the CLI!
+version 1.0.5 (2024-09-12)
+
+I'm powered by AI, so surprises and mistakes are possible. Make sure to verify any generated code or suggestions, and share feedback so that we can learn and improve. For more information, see https://gh.io/gh-copilot-transparency
+
+Suggestion:                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                         
+  ps aux                                                                                                                                                                                                                                 
+
+
+? Select an option
+> Copy command to clipboard
+
+Command copied to clipboard!
+Would you like me to execute the suggested command?
+waser: Yes please.
+Executing the suggested command now...
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.0  0.0  21288 11916 ?        Ss   oct19   0:01 /sbin/init splash
+[...]
+waser      95164  0.0  0.0  10532  6956 pts/9    R+   00:40   0:00 ps aux
+I hope this was useful. If you have any other questions, feel free to ask using the help command.
 ```
 
 ### `copilot` `==` `codepilot`
