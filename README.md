@@ -651,6 +651,8 @@ waser      95164  0.0  0.0  10532  6956 pts/9    R+   00:40   0:00 ps aux
 I hope this was useful. If you have any other questions, feel free to ask using the help command.
 ```
 
+You can also use `can_you`, `could_you` and `could_you_please` interchangeably.
+
 ### `copilot` `==` `codepilot`
 
 You can run CodePilot by using either `copilot` or `codepilot` commands interchangeably.
